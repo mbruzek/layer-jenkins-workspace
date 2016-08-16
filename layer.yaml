@@ -1,0 +1,4 @@
+includes: 
+  - 'layer:basic'
+  - 'interface:juju-info' 
+repo: https://github.com/juju-solutions/layer-jenkins-workspace.git
