@@ -7,12 +7,12 @@
 source charms.reactive.sh
 
 set -o errexit
-set -o xtrace
 
 JENKINS_WORKSPACE_DIR=/var/lib/jenkins/jobs
 
 @when_not 'jenkins-workspace.configured'
 function install_prerequisite_software() {
+  set -o xtrace
   # Install the pre-requisite software needed before pulling the workspace.
   status-set "maintenance" "Installing prerequisite software."
   # There are additional steps to configure before Jenkins can use Docker.
@@ -36,10 +36,12 @@ EOF
   service jenkins restart || true
 
   charms.reactive set_state 'jenkins-workspace.configured'
+  set +o xtrace
 }
 
 @when_not 'jenkins-workspace.delivered'
 function deliver_resource_payload() {
+  set -o xtrace
   # Use the Juju resources feature to get the workspace configuration.
   WORKSPACE_ARCHIVE=$(resource-get workspace) || true
   # When the archive file is zero size or workspace zip path is empty, return.
@@ -58,8 +60,7 @@ function deliver_resource_payload() {
      status-set "active" "Workspace uncompressed, ready to build."
      charms.reactive set_state 'jenkins-workspace.delivered'
   fi
+  set +o xtrace
 }
-
-set +o xtrace
 
 reactive_handler_main
