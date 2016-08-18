@@ -8,11 +8,11 @@ of tools to create delivery pipelines, continuous integration, automated
 testing, or continuous delivery. 
 
 This subordinate customizes the workspace on any unit added to the horizontally
-scalable jenkins server.
+scalable Jenkins server.
 
 ## Usage
 
-Deploy the jenkins charm and deploy the jeninks-workspace charm and relate the
+Deploy the jenkins charm and deploy the jenkins-workspace charm and relate the
 two charms in Juju:
 
 ```
