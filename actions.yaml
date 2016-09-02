@@ -1,0 +1,7 @@
+snapshot:
+  description: Take a snapshot of the workspace
+  params:
+    outfile:
+      type: string
+      description: The full path for compressed output
+      default: /home/ubuntu/snapshot.tgz
