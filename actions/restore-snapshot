@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# THIS ACTION RELIES HEAVILLY ON THE EXISTENCE OF A RESOURCE
+
+# Stop Jenkins
+service jenkins stop
+
+RESOURCE_FILE=$(resource-get workspace)
+RESOURCE_FINGERPRINT=$(sha256sum $RESOURCE_FILE)
+ATOMIC_OPERATION=$(action-get atomic)
+
+if [ ${ATOMIC_OPERATION} != 'False' ]
+then
+    rm -rf /var/lib/jenkins/jobs/*
+    action-set workspace.cleaned="True"
+fi
+
+action-set workspace.sum="$RESOURCE_FINGERPRINT"
+
+# Copy the file from the fetched resoure path to the Jenkins Job directory
+# and unpack the thin-backup. This will not remove jobs that dont exist
+# in the tarball.
+cp $RESOURCE_FILE /var/lib/jenkins/jobs/workspaces.tgz
+cd /var/lib/jenkins/jobs
+tar xvfz workspaces.tgz
+rm -f /var/lib/jenkins/jobs/workspaces.tgz
+
+# Start jenkins
+service jenkins start

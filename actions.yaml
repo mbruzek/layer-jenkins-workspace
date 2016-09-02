@@ -5,3 +5,11 @@ snapshot:
       type: string
       description: The full path for compressed output
       default: /home/ubuntu/snapshot.tgz
+restore-snapshot:
+  description: Overwrite from thin-config snapshot in charm resource
+  params:
+    atomic:
+      type: bool
+      description: Wipe anything in /var/lib/jenkins/jobs first
+      default: False
+

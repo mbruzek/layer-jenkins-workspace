@@ -43,6 +43,9 @@ juju scp jenkins-workspace/0:/home/ubuntu/workspaces.tgz .
 juju attach jenkins-workspace workspaces=./workspaces.tgz
 ```
 
+Snapshot-restore Allows the force deployment of a snopshot provided through resource.
+
+
 # Further information
 
 This charm was built from a the 
