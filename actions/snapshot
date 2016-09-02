@@ -1,0 +1,18 @@
+#!/bin/bash
+status-set maintenance "Compressing active workspace configurations."
+FINAL_DESTINATION=$(action-get outfile)
+cd /var/lib/jenkins/jobs
+tar --exclude='*.tgz' --exclude='Makefile' -cvzf workspaces.tgz ./*/config.xml
+chown ubuntu:ubuntu workspaces.tgz
+SNAPSHOT_FINGERPRINT=$(sha256sum workspaces.tgz)
+if [ -z $FINAL_DESTINATION ]
+then
+  mv workspaces.tgz /home/ubuntu/workspaces.tgz
+  FINAL_DESTINATION="/home/ubuntu/workspaces.tgz"
+else
+  mv workspaces.tgz $FINAL_DESTINATION
+fi
+status-set active 
+action-set output.file="$FINAL_DESTINATION"
+action-set output.256sum="$SNAPSHOT_FINGERPRINT"
+action-set fetch.cmd="juju scp $JUJU_UNIT_NAME:$FINAL_DESTINATION ."

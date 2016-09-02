@@ -31,6 +31,18 @@ Add the resource using the Juju resources feature:
 juju attach jenkins-workspace workspace=kubernetes-builder.tgz
 ```
 
+## Supported Actions
+
+Snapshot - Compress a workspace.tgz compatible with this charms resources.
+
+Example snapshot and restore operation:
+
+```
+juju run-action jenkins-workspace/0 snapshot outfile=/home/ubuntu/workspace.tgz
+juju scp jenkins-workspace/0:/home/ubuntu/workspaces.tgz .
+juju attach jenkins-workspace workspaces=./workspaces.tgz
+```
+
 # Further information
 
 This charm was built from a the 
