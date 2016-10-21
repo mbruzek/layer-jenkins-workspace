@@ -9,7 +9,6 @@ restore-snapshot:
   description: Overwrite from thin-config snapshot in charm resource
   params:
     atomic:
-      type: bool
+      type: boolean
       description: Wipe anything in /var/lib/jenkins/jobs first
       default: False
-
