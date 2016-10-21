@@ -1,7 +1,7 @@
 # jenkins-workspace 
 
-This is a subordinate charm used to configure builders for a deployed 
-[jenkins charm](https://jujucharms.com/jenkins). 
+This is a subordinate charm used to configure the Jenkins builders for a 
+deployed [jenkins charm](https://jujucharms.com/jenkins). 
 
 Jenkins is an automation engine with a plugin ecosystem that supports a variety
 of tools to create delivery pipelines, continuous integration, automated
@@ -33,18 +33,31 @@ juju attach jenkins-workspace workspace=kubernetes-builder.tgz
 
 ## Supported Actions
 
-Snapshot - Compress a workspace.tgz compatible with this charms resources.
+### snapshot
+`snapshot` - Create a compressed snapshot of the workspace directories. The 
+resulting tgz file is compatible with this charm's resource.
 
-Example snapshot and restore operation:
+Example snapshot operation:
 
 ```
-juju run-action jenkins-workspace/0 snapshot outfile=/home/ubuntu/workspace.tgz
-juju scp jenkins-workspace/0:/home/ubuntu/workspaces.tgz .
-juju attach jenkins-workspace workspaces=./workspaces.tgz
+# Create the snapshot of the current Jenkins Jobs.
+juju run-action jenkins-workspace/0 snapshot outfile=/home/ubuntu/snapshot.tgz
+# Copy the snapshot out of the charm to the local directory.
+juju scp jenkins-workspace/0:/home/ubuntu/snapshot.tgz .
 ```
 
-Snapshot-restore Allows the force deployment of a snapshot provided through 
-resource.
+### restore-snapshot
+
+`restore-snapshot` - Takes a Juju resource (tgz file) and installs the
+workspaces uncompresses to the Jenkins jobs directory. Using the `atomic` flag
+allows the removal of existing workspaces before the resource is expanded.
+
+```
+# Upload a new resource to the jenkins-workspace charm.
+juju attach jenkins-workspace workspace=./snapshot.tgz
+# Delete current Jenkins jobs and install the current workspace resource.
+juju run-action jenkins-workspace restore-snapshot atomic=True
+```
 
 # Further information
 
