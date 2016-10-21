@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# This bash script uses the reactive framework to configure Docker and install 
-# a Jenkins workspace. https://jujucharms.com/docs/2.0/developer-layer-example
+# This bash script uses the reactive framework to configure and install a
+# Jenkins workspace. https://jujucharms.com/docs/2.0/developer-layer-example
 
-# Source the reactive framework file to get the when and when not decorators.
+# Source the reactive framework file to get the when and when_not decorators.
 source charms.reactive.sh
 
 set -o errexit
@@ -17,7 +17,7 @@ function install_prerequisite_software() {
   status-set "maintenance" "Installing prerequisite software."
   # There are additional steps to configure before Jenkins can use Docker.
   apt-get update -qq -y
-  # Install AUFS and the kernel extras.
+  # Install Docker, AUFS and the kernel extras.
   apt-get install -y \
     aufs-tools \
     docker.io \

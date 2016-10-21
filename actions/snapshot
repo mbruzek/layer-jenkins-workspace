@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# This Juju action creates a snapshot of all the Jenkins jobs.
+
 status-set maintenance "Compressing active workspace configurations."
 FINAL_DESTINATION=$(action-get outfile)
 cd /var/lib/jenkins/jobs

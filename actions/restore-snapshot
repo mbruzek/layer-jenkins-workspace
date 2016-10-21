@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# THIS ACTION RELIES HEAVILLY ON THE EXISTENCE OF A RESOURCE
+# This Juju action takes the workspace resource and expands it to the Jenkins
+# jobs directory.
 
 # Stop Jenkins
 service jenkins stop
